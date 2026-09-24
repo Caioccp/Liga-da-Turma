@@ -20,7 +20,7 @@ public class Menu
             Console.ForegroundColor = ConsoleColor.Cyan;
 
             Console.WriteLine("╔══════════════════════════════════════════╗");
-            Console.WriteLine("║              LIGA DA TURMA              ║");
+            Console.WriteLine("║              LIGA DA TURMA               ║");
             Console.WriteLine("╠══════════════════════════════════════════╣");
 
             Console.ForegroundColor = ConsoleColor.Yellow;
