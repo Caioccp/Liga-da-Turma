@@ -38,13 +38,9 @@ public class Menu
 
             if (!int.TryParse(entrada, out opcao))
             {
-                Console.ForegroundColor = ConsoleColor.Red;
                 Console.WriteLine("\nOpção inválida!");
-                Console.ResetColor();
-
                 Console.WriteLine("Pressione ENTER para continuar...");
                 Console.ReadLine();
-
                 continue;
             }
 
@@ -83,10 +79,7 @@ public class Menu
                     break;
 
                 default:
-                    Console.ForegroundColor = ConsoleColor.Red;
                     Console.WriteLine("\nOpção inválida!");
-                    Console.ResetColor();
-
                     Console.WriteLine("Pressione ENTER para continuar...");
                     Console.ReadLine();
                     break;
@@ -100,7 +93,14 @@ public class Menu
         Console.Clear();
 
         Console.WriteLine("===== CADASTRAR EQUIPES =====\n");
-        Console.WriteLine("Aqui ficará o cadastro das equipes.");
+
+        Equipe equipe1 = new Equipe("Tigres");
+        Equipe equipe2 = new Equipe("Leões");
+
+        Console.WriteLine("Equipes cadastradas:\n");
+
+        equipe1.ExibirEquipe();
+        equipe2.ExibirEquipe();
 
         Console.WriteLine("\nPressione ENTER para voltar...");
         Console.ReadLine();
@@ -111,7 +111,12 @@ public class Menu
         Console.Clear();
 
         Console.WriteLine("===== EQUIPES CADASTRADAS =====\n");
-        Console.WriteLine("Aqui aparecerão as equipes cadastradas.");
+
+        Equipe equipe1 = new Equipe("Tigres");
+        Equipe equipe2 = new Equipe("Leões");
+
+        equipe1.ExibirEquipe();
+        equipe2.ExibirEquipe();
 
         Console.WriteLine("\nPressione ENTER para voltar...");
         Console.ReadLine();
@@ -122,8 +127,20 @@ public class Menu
         Console.Clear();
 
         Console.WriteLine("===== REGISTRAR PARTIDA =====\n");
-        Console.WriteLine("Aqui será feito o registro das partidas.");
-        Console.WriteLine("Modalidades: Futsal e eSports.");
+
+        Equipe tigres = new Equipe("Tigres");
+        Equipe leoes = new Equipe("Leões");
+
+        Console.Write("Modalidade (Futsal/eSports): ");
+        string modalidade = Console.ReadLine() ?? "";
+
+        Partida partida = new Partida(tigres, leoes, modalidade);
+
+        Console.Clear();
+
+        partida.ExibirPartida();
+
+        Console.WriteLine("\nPartida cadastrada com sucesso!");
 
         Console.WriteLine("\nPressione ENTER para voltar...");
         Console.ReadLine();
@@ -134,7 +151,7 @@ public class Menu
         Console.Clear();
 
         Console.WriteLine("===== HISTÓRICO DE PARTIDAS =====\n");
-        Console.WriteLine("Aqui aparecerão todas as partidas registradas.");
+        Console.WriteLine("Nenhuma partida registrada ainda.");
 
         Console.WriteLine("\nPressione ENTER para voltar...");
         Console.ReadLine();
@@ -146,11 +163,10 @@ public class Menu
 
         Console.WriteLine("===== CADASTRAR FESTIVAL =====\n");
 
-        Console.WriteLine("Aqui serão cadastrados:");
-        Console.WriteLine("- Nome do festival");
-        Console.WriteLine("- Local");
-        Console.WriteLine("- Data");
-        Console.WriteLine("- Horário");
+        Console.WriteLine("Nome do festival:");
+        Console.WriteLine("Local:");
+        Console.WriteLine("Data:");
+        Console.WriteLine("Horário:");
 
         Console.WriteLine("\nPressione ENTER para voltar...");
         Console.ReadLine();
@@ -161,7 +177,7 @@ public class Menu
         Console.Clear();
 
         Console.WriteLine("===== CONVITE DO FESTIVAL =====\n");
-        Console.WriteLine("Aqui será gerado o convite textual.");
+        Console.WriteLine("Convite do festival será gerado aqui.");
 
         Console.WriteLine("\nPressione ENTER para voltar...");
         Console.ReadLine();
@@ -172,7 +188,7 @@ public class Menu
         Console.Clear();
 
         Console.WriteLine("===== CARTÃO DE RESULTADO =====\n");
-        Console.WriteLine("Aqui será gerado o cartão de resultado da partida.");
+        Console.WriteLine("Cartão de resultado será gerado aqui.");
 
         Console.WriteLine("\nPressione ENTER para voltar...");
         Console.ReadLine();
