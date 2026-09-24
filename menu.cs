@@ -20,7 +20,7 @@ public class Menu
             Console.ForegroundColor = ConsoleColor.Cyan;
 
             Console.WriteLine("╔══════════════════════════════════════════╗");
-            Console.WriteLine("║              LIGA DA TURMA               ║");
+            Console.WriteLine("║              LIGA DA TURMA              ║");
             Console.WriteLine("╠══════════════════════════════════════════╣");
 
             Console.ForegroundColor = ConsoleColor.Yellow;
@@ -350,24 +350,59 @@ public class Menu
         Equipe equipe1 = sistema.Equipes[numero1 - 1];
         Equipe equipe2 = sistema.Equipes[numero2 - 1];
 
-        Console.Write("\nModalidade: ");
+        // ESCOLHA DA MODALIDADE
+        Console.Clear();
 
-        string modalidade = Console.ReadLine() ?? "";
+        Console.WriteLine("===== ESCOLHER MODALIDADE =====\n");
 
-        if (modalidade == "0")
+        Console.WriteLine("1 - Futsal");
+        Console.WriteLine("2 - Voleibol");
+        Console.WriteLine("3 - Basquete");
+        Console.WriteLine("4 - Beisebol");
+        Console.WriteLine("0 - Cancelar");
+
+        Console.Write("\nEscolha a modalidade: ");
+
+        string opcaoModalidade = Console.ReadLine() ?? "";
+
+        string modalidade;
+
+        switch (opcaoModalidade)
         {
-            Console.WriteLine("Cadastro da partida cancelado.");
-            Pausar();
-            return;
+            case "1":
+                modalidade = "Futsal";
+                break;
+
+            case "2":
+                modalidade = "Voleibol";
+                break;
+
+            case "3":
+                modalidade = "Basquete";
+                break;
+
+            case "4":
+                modalidade = "Beisebol";
+                break;
+
+            case "0":
+                Console.WriteLine("\nCadastro da partida cancelado.");
+                Pausar();
+                return;
+
+            default:
+                Console.WriteLine("\nModalidade inválida.");
+                Pausar();
+                return;
         }
 
         Partida partida = new Partida(equipe1, equipe2, modalidade);
 
         sistema.AdicionarPartida(partida);
 
-        Console.WriteLine("\nPartida cadastrada com sucesso!");
+        Console.WriteLine($"\nPartida de {modalidade} cadastrada com sucesso!");
 
-        Console.WriteLine("\nDeseja registrar o resultado agora? (S/N): ");
+        Console.Write("\nDeseja registrar o resultado agora? (S/N): ");
 
         string resposta = Console.ReadLine() ?? "";
 
@@ -424,7 +459,8 @@ public class Menu
             Console.WriteLine(
                 $"{i + 1} - {partida.Equipe1.Nome} " +
                 $"{partida.PlacarEquipe1} x {partida.PlacarEquipe2} " +
-                $"{partida.Equipe2.Nome}"
+                $"{partida.Equipe2.Nome} " +
+                $"({partida.Modalidade})"
             );
         }
 
@@ -502,7 +538,8 @@ public class Menu
             Console.WriteLine(
                 $"{i + 1} - {partida.Equipe1.Nome} " +
                 $"{partida.PlacarEquipe1} x {partida.PlacarEquipe2} " +
-                $"{partida.Equipe2.Nome}"
+                $"{partida.Equipe2.Nome} " +
+                $"({partida.Modalidade})"
             );
         }
 
