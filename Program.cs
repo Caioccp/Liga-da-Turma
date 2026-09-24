@@ -4,7 +4,10 @@ class Program
 {
     static void Main(string[] args)
     {
-        Menu menu = new Menu();
+        Sistema sistema = new Sistema();
+
+        Menu menu = new Menu(sistema);
+
         menu.Exibir();
     }
 }

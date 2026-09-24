@@ -2,6 +2,13 @@ using System;
 
 public class Menu
 {
+    private Sistema sistema;
+
+    public Menu(Sistema sistema)
+    {
+        this.sistema = sistema;
+    }
+
     public void Exibir()
     {
         int opcao;
@@ -11,43 +18,47 @@ public class Menu
             Console.Clear();
 
             Console.ForegroundColor = ConsoleColor.Cyan;
+
             Console.WriteLine("╔══════════════════════════════════════════╗");
-            Console.WriteLine("║              LIGA DA TURMA               ║");
+            Console.WriteLine("║              LIGA DA TURMA              ║");
             Console.WriteLine("╠══════════════════════════════════════════╣");
 
             Console.ForegroundColor = ConsoleColor.Yellow;
-            Console.WriteLine("║ 1 - Cadastrar equipes                    ║");
+
+            Console.WriteLine("║ 1 - Cadastrar equipe                     ║");
             Console.WriteLine("║ 2 - Consultar equipes                    ║");
-            Console.WriteLine("║ 3 - Registrar partida                    ║");
-            Console.WriteLine("║ 4 - Consultar histórico                  ║");
-            Console.WriteLine("║ 5 - Cadastrar festival                   ║");
-            Console.WriteLine("║ 6 - Gerar convite do festival            ║");
-            Console.WriteLine("║ 7 - Gerar cartão de resultado            ║");
+            Console.WriteLine("║ 3 - Alterar equipe                       ║");
+            Console.WriteLine("║ 4 - Excluir equipe                       ║");
+            Console.WriteLine("║ 5 - Registrar partida                    ║");
+            Console.WriteLine("║ 6 - Consultar partidas                   ║");
+            Console.WriteLine("║ 7 - Alterar resultado                    ║");
+            Console.WriteLine("║ 8 - Excluir partida                      ║");
 
             Console.ForegroundColor = ConsoleColor.Red;
+
             Console.WriteLine("║ 0 - Sair                                 ║");
 
             Console.ForegroundColor = ConsoleColor.Cyan;
+
             Console.WriteLine("╚══════════════════════════════════════════╝");
 
             Console.ResetColor();
 
             Console.Write("\nEscolha uma opção: ");
 
-            string? entrada = Console.ReadLine();
+            string entrada = Console.ReadLine() ?? "";
 
             if (!int.TryParse(entrada, out opcao))
             {
                 Console.WriteLine("\nOpção inválida!");
-                Console.WriteLine("Pressione ENTER para continuar...");
-                Console.ReadLine();
+                Pausar();
                 continue;
             }
 
             switch (opcao)
             {
                 case 1:
-                    CadastrarEquipes();
+                    CadastrarEquipe();
                     break;
 
                 case 2:
@@ -55,23 +66,27 @@ public class Menu
                     break;
 
                 case 3:
-                    RegistrarPartida();
+                    AlterarEquipe();
                     break;
 
                 case 4:
-                    ConsultarHistorico();
+                    ExcluirEquipe();
                     break;
 
                 case 5:
-                    CadastrarFestival();
+                    RegistrarPartida();
                     break;
 
                 case 6:
-                    GerarConvite();
+                    ConsultarPartidas();
                     break;
 
                 case 7:
-                    GerarCartaoResultado();
+                    AlterarResultado();
+                    break;
+
+                case 8:
+                    ExcluirPartida();
                     break;
 
                 case 0:
@@ -80,117 +95,471 @@ public class Menu
 
                 default:
                     Console.WriteLine("\nOpção inválida!");
-                    Console.WriteLine("Pressione ENTER para continuar...");
-                    Console.ReadLine();
+                    Pausar();
                     break;
             }
 
         } while (opcao != 0);
     }
 
-    void CadastrarEquipes()
+    private void CadastrarEquipe()
     {
         Console.Clear();
 
         Console.WriteLine("===== CADASTRAR EQUIPES =====\n");
 
-        Equipe equipe1 = new Equipe("Tigres");
-        Equipe equipe2 = new Equipe("Leões");
+        Console.WriteLine("Digite 0 a qualquer momento para cancelar.\n");
 
-        Console.WriteLine("Equipes cadastradas:\n");
+        while (true)
+        {
+            Console.Write("Nome da equipe: ");
 
-        equipe1.ExibirEquipe();
-        equipe2.ExibirEquipe();
+            string nome = Console.ReadLine() ?? "";
 
-        Console.WriteLine("\nPressione ENTER para voltar...");
-        Console.ReadLine();
+            if (nome == "0")
+            {
+                Console.WriteLine("\nCadastro cancelado.");
+                Pausar();
+                return;
+            }
+
+            if (string.IsNullOrWhiteSpace(nome))
+            {
+                Console.WriteLine("O nome não pode ficar vazio.\n");
+                continue;
+            }
+
+            Equipe equipe = new Equipe(nome);
+
+            sistema.AdicionarEquipe(equipe);
+
+            Console.WriteLine($"\nEquipe '{nome}' cadastrada com sucesso!\n");
+
+            Console.Write("Deseja cadastrar outra equipe? (S/N): ");
+            string resposta = Console.ReadLine() ?? "";
+
+            if (resposta.ToUpper() != "S")
+            {
+                break;
+            }
+        }
+
+        Pausar();
     }
 
-    void ConsultarEquipes()
+    private void ConsultarEquipes()
     {
         Console.Clear();
 
         Console.WriteLine("===== EQUIPES CADASTRADAS =====\n");
 
-        Equipe equipe1 = new Equipe("Tigres");
-        Equipe equipe2 = new Equipe("Leões");
+        if (sistema.Equipes.Count == 0)
+        {
+            Console.WriteLine("Nenhuma equipe cadastrada.");
+            Pausar();
+            return;
+        }
 
-        equipe1.ExibirEquipe();
-        equipe2.ExibirEquipe();
+        for (int i = 0; i < sistema.Equipes.Count; i++)
+        {
+            Console.WriteLine($"{i + 1} - {sistema.Equipes[i].Nome}");
+        }
 
-        Console.WriteLine("\nPressione ENTER para voltar...");
-        Console.ReadLine();
+        Pausar();
     }
 
-    void RegistrarPartida()
+    private void AlterarEquipe()
+    {
+        Console.Clear();
+
+        Console.WriteLine("===== ALTERAR EQUIPE =====\n");
+
+        if (sistema.Equipes.Count == 0)
+        {
+            Console.WriteLine("Nenhuma equipe cadastrada.");
+            Pausar();
+            return;
+        }
+
+        ConsultarEquipesSemPausa();
+
+        Console.Write("\nDigite o número da equipe que deseja alterar: ");
+
+        if (!int.TryParse(Console.ReadLine(), out int numero))
+        {
+            Console.WriteLine("Número inválido.");
+            Pausar();
+            return;
+        }
+
+        if (numero < 1 || numero > sistema.Equipes.Count)
+        {
+            Console.WriteLine("Equipe não encontrada.");
+            Pausar();
+            return;
+        }
+
+        Equipe equipe = sistema.Equipes[numero - 1];
+
+        Console.Write($"\nNovo nome para '{equipe.Nome}': ");
+
+        string novoNome = Console.ReadLine() ?? "";
+
+        if (novoNome == "0")
+        {
+            Console.WriteLine("\nAlteração cancelada.");
+            Pausar();
+            return;
+        }
+
+        if (string.IsNullOrWhiteSpace(novoNome))
+        {
+            Console.WriteLine("O nome não pode ficar vazio.");
+            Pausar();
+            return;
+        }
+
+        equipe.AlterarNome(novoNome);
+
+        Console.WriteLine("\nEquipe alterada com sucesso!");
+
+        Pausar();
+    }
+
+    private void ExcluirEquipe()
+    {
+        Console.Clear();
+
+        Console.WriteLine("===== EXCLUIR EQUIPE =====\n");
+
+        if (sistema.Equipes.Count == 0)
+        {
+            Console.WriteLine("Nenhuma equipe cadastrada.");
+            Pausar();
+            return;
+        }
+
+        ConsultarEquipesSemPausa();
+
+        Console.Write("\nDigite o número da equipe que deseja excluir: ");
+
+        if (!int.TryParse(Console.ReadLine(), out int numero))
+        {
+            Console.WriteLine("Número inválido.");
+            Pausar();
+            return;
+        }
+
+        if (numero < 1 || numero > sistema.Equipes.Count)
+        {
+            Console.WriteLine("Equipe não encontrada.");
+            Pausar();
+            return;
+        }
+
+        Equipe equipe = sistema.Equipes[numero - 1];
+
+        Console.Write($"Tem certeza que deseja excluir '{equipe.Nome}'? (S/N): ");
+
+        string resposta = Console.ReadLine() ?? "";
+
+        if (resposta.ToUpper() != "S")
+        {
+            Console.WriteLine("\nExclusão cancelada.");
+            Pausar();
+            return;
+        }
+
+        sistema.RemoverEquipe(equipe);
+
+        Console.WriteLine("\nEquipe excluída com sucesso!");
+
+        Pausar();
+    }
+
+    private void RegistrarPartida()
     {
         Console.Clear();
 
         Console.WriteLine("===== REGISTRAR PARTIDA =====\n");
 
-        Equipe tigres = new Equipe("Tigres");
-        Equipe leoes = new Equipe("Leões");
+        if (sistema.Equipes.Count < 2)
+        {
+            Console.WriteLine("É necessário ter pelo menos 2 equipes cadastradas.");
+            Pausar();
+            return;
+        }
 
-        Console.Write("Modalidade (Futsal/eSports): ");
+        ConsultarEquipesSemPausa();
+
+        Console.WriteLine("\nDigite 0 para cancelar.");
+
+        Console.Write("\nNúmero da primeira equipe: ");
+
+        if (!int.TryParse(Console.ReadLine(), out int numero1))
+        {
+            Console.WriteLine("Número inválido.");
+            Pausar();
+            return;
+        }
+
+        if (numero1 == 0)
+        {
+            Console.WriteLine("Cadastro da partida cancelado.");
+            Pausar();
+            return;
+        }
+
+        if (numero1 < 1 || numero1 > sistema.Equipes.Count)
+        {
+            Console.WriteLine("Equipe não encontrada.");
+            Pausar();
+            return;
+        }
+
+        Console.Write("Número da segunda equipe: ");
+
+        if (!int.TryParse(Console.ReadLine(), out int numero2))
+        {
+            Console.WriteLine("Número inválido.");
+            Pausar();
+            return;
+        }
+
+        if (numero2 == 0)
+        {
+            Console.WriteLine("Cadastro da partida cancelado.");
+            Pausar();
+            return;
+        }
+
+        if (numero2 < 1 || numero2 > sistema.Equipes.Count)
+        {
+            Console.WriteLine("Equipe não encontrada.");
+            Pausar();
+            return;
+        }
+
+        if (numero1 == numero2)
+        {
+            Console.WriteLine("Uma equipe não pode jogar contra ela mesma.");
+            Pausar();
+            return;
+        }
+
+        Equipe equipe1 = sistema.Equipes[numero1 - 1];
+        Equipe equipe2 = sistema.Equipes[numero2 - 1];
+
+        Console.Write("\nModalidade: ");
+
         string modalidade = Console.ReadLine() ?? "";
 
-        Partida partida = new Partida(tigres, leoes, modalidade);
+        if (modalidade == "0")
+        {
+            Console.WriteLine("Cadastro da partida cancelado.");
+            Pausar();
+            return;
+        }
 
-        Console.Clear();
+        Partida partida = new Partida(equipe1, equipe2, modalidade);
 
-        partida.ExibirPartida();
+        sistema.AdicionarPartida(partida);
 
         Console.WriteLine("\nPartida cadastrada com sucesso!");
 
-        Console.WriteLine("\nPressione ENTER para voltar...");
-        Console.ReadLine();
+        Console.WriteLine("\nDeseja registrar o resultado agora? (S/N): ");
+
+        string resposta = Console.ReadLine() ?? "";
+
+        if (resposta.ToUpper() == "S")
+        {
+            RegistrarResultadoDaPartida(partida);
+        }
+
+        Pausar();
     }
 
-    void ConsultarHistorico()
+    private void ConsultarPartidas()
     {
         Console.Clear();
 
-        Console.WriteLine("===== HISTÓRICO DE PARTIDAS =====\n");
-        Console.WriteLine("Nenhuma partida registrada ainda.");
+        Console.WriteLine("===== PARTIDAS CADASTRADAS =====\n");
 
-        Console.WriteLine("\nPressione ENTER para voltar...");
-        Console.ReadLine();
+        if (sistema.Partidas.Count == 0)
+        {
+            Console.WriteLine("Nenhuma partida cadastrada.");
+            Pausar();
+            return;
+        }
+
+        for (int i = 0; i < sistema.Partidas.Count; i++)
+        {
+            Console.WriteLine($"PARTIDA {i + 1}");
+
+            sistema.Partidas[i].ExibirPartida();
+
+            Console.WriteLine();
+        }
+
+        Pausar();
     }
 
-    void CadastrarFestival()
+    private void AlterarResultado()
     {
         Console.Clear();
 
-        Console.WriteLine("===== CADASTRAR FESTIVAL =====\n");
+        Console.WriteLine("===== ALTERAR RESULTADO =====\n");
 
-        Console.WriteLine("Nome do festival:");
-        Console.WriteLine("Local:");
-        Console.WriteLine("Data:");
-        Console.WriteLine("Horário:");
+        if (sistema.Partidas.Count == 0)
+        {
+            Console.WriteLine("Nenhuma partida cadastrada.");
+            Pausar();
+            return;
+        }
 
-        Console.WriteLine("\nPressione ENTER para voltar...");
-        Console.ReadLine();
+        for (int i = 0; i < sistema.Partidas.Count; i++)
+        {
+            Partida partida = sistema.Partidas[i];
+
+            Console.WriteLine(
+                $"{i + 1} - {partida.Equipe1.Nome} " +
+                $"{partida.PlacarEquipe1} x {partida.PlacarEquipe2} " +
+                $"{partida.Equipe2.Nome}"
+            );
+        }
+
+        Console.Write("\nDigite o número da partida: ");
+
+        if (!int.TryParse(Console.ReadLine(), out int numero))
+        {
+            Console.WriteLine("Número inválido.");
+            Pausar();
+            return;
+        }
+
+        if (numero < 1 || numero > sistema.Partidas.Count)
+        {
+            Console.WriteLine("Partida não encontrada.");
+            Pausar();
+            return;
+        }
+
+        Partida partidaSelecionada = sistema.Partidas[numero - 1];
+
+        RegistrarResultadoDaPartida(partidaSelecionada);
+
+        Pausar();
     }
 
-    void GerarConvite()
+    private void RegistrarResultadoDaPartida(Partida partida)
+    {
+        Console.WriteLine("\n===== RESULTADO =====");
+
+        Console.Write($"Placar de {partida.Equipe1.Nome}: ");
+
+        if (!int.TryParse(Console.ReadLine(), out int placar1))
+        {
+            Console.WriteLine("Placar inválido.");
+            return;
+        }
+
+        Console.Write($"Placar de {partida.Equipe2.Nome}: ");
+
+        if (!int.TryParse(Console.ReadLine(), out int placar2))
+        {
+            Console.WriteLine("Placar inválido.");
+            return;
+        }
+
+        if (placar1 < 0 || placar2 < 0)
+        {
+            Console.WriteLine("O placar não pode ser negativo.");
+            return;
+        }
+
+        partida.AlterarResultado(placar1, placar2);
+
+        Console.WriteLine("\nResultado registrado com sucesso!");
+    }
+
+    private void ExcluirPartida()
     {
         Console.Clear();
 
-        Console.WriteLine("===== CONVITE DO FESTIVAL =====\n");
-        Console.WriteLine("Convite do festival será gerado aqui.");
+        Console.WriteLine("===== EXCLUIR PARTIDA =====\n");
 
-        Console.WriteLine("\nPressione ENTER para voltar...");
-        Console.ReadLine();
+        if (sistema.Partidas.Count == 0)
+        {
+            Console.WriteLine("Nenhuma partida cadastrada.");
+            Pausar();
+            return;
+        }
+
+        for (int i = 0; i < sistema.Partidas.Count; i++)
+        {
+            Partida partida = sistema.Partidas[i];
+
+            Console.WriteLine(
+                $"{i + 1} - {partida.Equipe1.Nome} " +
+                $"{partida.PlacarEquipe1} x {partida.PlacarEquipe2} " +
+                $"{partida.Equipe2.Nome}"
+            );
+        }
+
+        Console.Write("\nDigite o número da partida que deseja excluir: ");
+
+        if (!int.TryParse(Console.ReadLine(), out int numero))
+        {
+            Console.WriteLine("Número inválido.");
+            Pausar();
+            return;
+        }
+
+        if (numero < 1 || numero > sistema.Partidas.Count)
+        {
+            Console.WriteLine("Partida não encontrada.");
+            Pausar();
+            return;
+        }
+
+        Partida partidaSelecionada = sistema.Partidas[numero - 1];
+
+        Console.WriteLine(
+            $"\nPartida: {partidaSelecionada.Equipe1.Nome} " +
+            $"x {partidaSelecionada.Equipe2.Nome}"
+        );
+
+        Console.Write("Tem certeza que deseja excluir? (S/N): ");
+
+        string resposta = Console.ReadLine() ?? "";
+
+        if (resposta.ToUpper() != "S")
+        {
+            Console.WriteLine("\nExclusão cancelada.");
+            Pausar();
+            return;
+        }
+
+        sistema.RemoverPartida(partidaSelecionada);
+
+        Console.WriteLine("\nPartida excluída com sucesso!");
+
+        Pausar();
     }
 
-    void GerarCartaoResultado()
+    private void ConsultarEquipesSemPausa()
     {
-        Console.Clear();
+        Console.WriteLine("===== EQUIPES =====\n");
 
-        Console.WriteLine("===== CARTÃO DE RESULTADO =====\n");
-        Console.WriteLine("Cartão de resultado será gerado aqui.");
+        for (int i = 0; i < sistema.Equipes.Count; i++)
+        {
+            Console.WriteLine($"{i + 1} - {sistema.Equipes[i].Nome}");
+        }
+    }
 
-        Console.WriteLine("\nPressione ENTER para voltar...");
+    private void Pausar()
+    {
+        Console.WriteLine("\nPressione ENTER para continuar...");
         Console.ReadLine();
     }
 }
