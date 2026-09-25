@@ -9,6 +9,8 @@ public class Sistema
 
     public List<Partida> Partidas { get; } = new List<Partida>();
 
+    public Festival? Festival { get; private set; }
+
     public int GerarIdPartida()
     {
         return proximoIdPartida++;
@@ -23,6 +25,7 @@ public class Sistema
     {
         Equipes.Remove(equipe);
     }
+    
 
     public void AdicionarPartida(Partida partida)
     {
@@ -32,5 +35,10 @@ public class Sistema
     public void RemoverPartida(Partida partida)
     {
         Partidas.Remove(partida);
+    }
+
+    public void DefinirFestival(Festival festival)
+    {
+        Festival = festival;
     }
 }
