@@ -87,7 +87,7 @@ public class Partida
         Console.WriteLine($"Equipe 2: {Equipe2.Nome}");
         Console.WriteLine($"Modalidade: {Modalidade}");
         Console.WriteLine($"Placar: {PlacarEquipe1} x {PlacarEquipe2}");
-        Console.WriteLine($"Resultado:{ObterResultado()}");
+        Console.WriteLine($"Resultado: {ObterResultado()}");
         Console.WriteLine("=================================");
     }
 }
