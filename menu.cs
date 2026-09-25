@@ -98,7 +98,7 @@ public class Menu
                 case 10:
                     ConsultarFestival();
                     break;
-                    
+
                 case 0:
                     Console.WriteLine("\nEncerrando o programa...");
                     break;
@@ -608,6 +608,79 @@ public class Menu
         sistema.RemoverPartida(partidaSelecionada);
 
         Console.WriteLine("\nPartida excluída com sucesso!");
+
+        Pausar();
+    }
+
+    private void CadastrarFestival()
+    {
+        Console.Clear();
+
+        Console.WriteLine("===== CADASTRAR FESTIVAL =====\n");
+
+        Console.Write("Nome do festival: ");
+        string nome = Console.ReadLine() ?? "";
+
+        if (string.IsNullOrWhiteSpace(nome))
+        {
+            Console.WriteLine("\nO nome não pode ficar vazio.");
+            Pausar();
+            return;
+        }
+
+        Console.Write("Local: ");
+        string local = Console.ReadLine() ?? "";
+
+        if (string.IsNullOrWhiteSpace(local))
+        {
+         Console.WriteLine("\nO local não pode ficar vazio.");
+            Pausar();
+            return;
+        }
+
+        Console.Write("Data: ");
+        string data = Console.ReadLine() ?? "";
+
+        if (string.IsNullOrWhiteSpace(data))
+        {
+            Console.WriteLine("\nA data não pode ficar vazia.");
+            Pausar();
+            return;
+        }
+
+        Console.Write("Horário: ");
+        string horario = Console.ReadLine() ?? "";
+
+        if (string.IsNullOrWhiteSpace(horario))
+        {
+            Console.WriteLine("\nO horário não pode ficar vazio.");
+            Pausar();
+            return;
+        }
+
+        Festival festival = new Festival(nome, local, data, horario);
+
+        sistema.DefinirFestival(festival);
+
+        Console.WriteLine("\nFestival cadastrado com sucesso!");
+
+        Pausar();
+    }
+
+    private void ConsultarFestival()
+    {
+        Console.Clear();
+
+        Console.WriteLine("===== FESTIVAL =====\n");
+
+        if (sistema.Festival == null)
+        {
+            Console.WriteLine("Nenhum festival cadastrado.");
+            Pausar();
+            return;
+        }
+
+        sistema.Festival.ExibirFestival();
 
         Pausar();
     }
