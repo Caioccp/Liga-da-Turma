@@ -431,8 +431,6 @@ public class Menu
 
         for (int i = 0; i < sistema.Partidas.Count; i++)
         {
-            Console.WriteLine($"PARTIDA {i + 1}");
-
             sistema.Partidas[i].ExibirPartida();
 
             Console.WriteLine();
