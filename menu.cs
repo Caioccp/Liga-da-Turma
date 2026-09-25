@@ -25,14 +25,16 @@ public class Menu
 
             Console.ForegroundColor = ConsoleColor.Yellow;
 
-            Console.WriteLine("║ 1 - Cadastrar equipe                     ║");
-            Console.WriteLine("║ 2 - Consultar equipes                    ║");
-            Console.WriteLine("║ 3 - Alterar equipe                       ║");
-            Console.WriteLine("║ 4 - Excluir equipe                       ║");
-            Console.WriteLine("║ 5 - Registrar partida                    ║");
-            Console.WriteLine("║ 6 - Consultar partidas                   ║");
-            Console.WriteLine("║ 7 - Alterar resultado                    ║");
-            Console.WriteLine("║ 8 - Excluir partida                      ║");
+            Console.WriteLine("║ 1 - Cadastrar equipe(s)                  ║");
+            Console.WriteLine("║ 2 - Consultar equipe(s)                  ║");
+            Console.WriteLine("║ 3 - Alterar equipe(s)                    ║");
+            Console.WriteLine("║ 4 - Excluir equipe(s)                    ║");
+            Console.WriteLine("║ 5 - Registrar partida(s)                 ║");
+            Console.WriteLine("║ 6 - Consultar partida(s)                 ║");
+            Console.WriteLine("║ 7 - Excluir partida(s)                   ║");
+            Console.WriteLine("║ 8 - Alterar resultado(s)                 ║");
+            Console.WriteLine("║ 9 - Cadastrar festival                   ║");
+            Console.WriteLine("║ 10 - Consultar festival                  ║");
 
             Console.ForegroundColor = ConsoleColor.Red;
 
@@ -89,6 +91,14 @@ public class Menu
                     ExcluirPartida();
                     break;
 
+                case 9:
+                    CadastrarFestival();
+                    break;
+
+                case 10:
+                    ConsultarFestival();
+                    break;
+                    
                 case 0:
                     Console.WriteLine("\nEncerrando o programa...");
                     break;
