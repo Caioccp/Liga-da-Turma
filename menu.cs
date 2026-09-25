@@ -633,7 +633,7 @@ public class Menu
 
         if (string.IsNullOrWhiteSpace(local))
         {
-         Console.WriteLine("\nO local não pode ficar vazio.");
+            Console.WriteLine("\nO local não pode ficar vazio.");
             Pausar();
             return;
         }
