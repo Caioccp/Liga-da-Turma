@@ -457,30 +457,39 @@ public class Menu
             Partida partida = sistema.Partidas[i];
 
             Console.WriteLine(
-                $"{i + 1} - {partida.Equipe1.Nome} " +
+                $"ID {partida.Id} - {partida.Equipe1.Nome} " +
                 $"{partida.PlacarEquipe1} x {partida.PlacarEquipe2} " +
                 $"{partida.Equipe2.Nome} " +
                 $"({partida.Modalidade})"
             );
         }
 
-        Console.Write("\nDigite o número da partida: ");
+        Console.Write("\nDigite o ID da partida: ");
 
-        if (!int.TryParse(Console.ReadLine(), out int numero))
+        if (!int.TryParse(Console.ReadLine(), out int id))
         {
-            Console.WriteLine("Número inválido.");
+            Console.WriteLine("ID inválido.");
             Pausar();
             return;
         }
 
-        if (numero < 1 || numero > sistema.Partidas.Count)
+        Partida? partidaSelecionada = null;
+
+        for (int i = 0; i < sistema.Partidas.Count; i++)
+        {
+            if (sistema.Partidas[i].Id == id)
+            {
+                partidaSelecionada = sistema.Partidas[i];
+                break;
+            }
+        }
+
+        if (partidaSelecionada == null)
         {
             Console.WriteLine("Partida não encontrada.");
             Pausar();
             return;
         }
-
-        Partida partidaSelecionada = sistema.Partidas[numero - 1];
 
         RegistrarResultadoDaPartida(partidaSelecionada);
 
