@@ -60,6 +60,7 @@ public class Partida
         Console.WriteLine("=================================");
         Console.WriteLine("           PARTIDA");
         Console.WriteLine("=================================");
+        Console.WriteLine ($"ID da partida: {Id}");
         Console.WriteLine($"Equipe 1: {Equipe1.Nome}");
         Console.WriteLine($"Equipe 2: {Equipe2.Nome}");
         Console.WriteLine($"Modalidade: {Modalidade}");
