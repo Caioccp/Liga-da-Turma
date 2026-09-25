@@ -396,7 +396,9 @@ public class Menu
                 return;
         }
 
-        Partida partida = new Partida(equipe1, equipe2, modalidade);
+        int id = sistema.GerarIdPartida();
+    
+        Partida partida = new Partida(id, equipe1, equipe2, modalidade);
 
         sistema.AdicionarPartida(partida);
 

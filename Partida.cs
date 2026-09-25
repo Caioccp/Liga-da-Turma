@@ -2,6 +2,8 @@ using System;
 
 public class Partida
 {
+
+    public int Id { get; private set; }
     public Equipe Equipe1 { get; private set; }
     public Equipe Equipe2 { get; private set; }
 
@@ -10,8 +12,9 @@ public class Partida
     public int PlacarEquipe1 { get; private set; }
     public int PlacarEquipe2 { get; private set; }
 
-    public Partida(Equipe equipe1, Equipe equipe2, string modalidade)
+    public Partida(int Id, Equipe equipe1, Equipe equipe2, string modalidade)
     {
+        Id = id;
         Equipe1 = equipe1;
         Equipe2 = equipe2;
 

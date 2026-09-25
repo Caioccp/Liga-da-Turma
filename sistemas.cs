@@ -2,9 +2,17 @@ using System.Collections.Generic;
 
 public class Sistema
 {
+
+    private int proximoIdPartida = 1;
+
     public List<Equipe> Equipes { get; } = new List<Equipe>();
 
     public List<Partida> Partidas { get; } = new List<Partida>();
+
+    public int GerarIdPartida()
+    {
+        return proximoIdPartida++;
+    }
 
     public void AdicionarEquipe(Equipe equipe)
     {
