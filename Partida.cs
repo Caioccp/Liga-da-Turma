@@ -6,9 +6,8 @@ public class Partida
     public int Id { get; private set; }
     public Equipe Equipe1 { get; private set; }
     public Equipe Equipe2 { get; private set; }
-
+    public bool ResultadoRegistrado { get; private set; }
     public string Modalidade { get; private set; }
-
     public int PlacarEquipe1 { get; private set; }
     public int PlacarEquipe2 { get; private set; }
 
@@ -31,6 +30,7 @@ public class Partida
 
         PlacarEquipe1 = 0;
         PlacarEquipe2 = 0;
+        ResultadoRegistrado = false;
     }
 
     public void RegistrarResultado(int placarEquipe1, int placarEquipe2)
@@ -42,6 +42,7 @@ public class Partida
 
         PlacarEquipe1 = placarEquipe1;
         PlacarEquipe2 = placarEquipe2;
+        ResultadoRegistrado = true;
     }
 
     public void AlterarResultado(int novoPlacar1, int novoPlacar2)
@@ -53,6 +54,27 @@ public class Partida
 
         PlacarEquipe1 = novoPlacar1;
         PlacarEquipe2 = novoPlacar2;
+        ResultadoRegistrado = true;
+    }
+
+    public string ObterResultado()
+    {
+        if (!ResultadoRegistrado)
+        {
+            return "Resultado ainda não registrado.";
+        }
+
+        if (PlacarEquipe1 > PlacarEquipe2)
+        {
+            return $"{Equipe1.Nome} venceu";
+        }
+
+        if (PlacarEquipe2 > PlacarEquipe1)
+        {
+            return $"{Equipe2.Nome} venceu";
+        }
+
+        return "Empate";
     }
 
     public void ExibirPartida()
@@ -65,6 +87,7 @@ public class Partida
         Console.WriteLine($"Equipe 2: {Equipe2.Nome}");
         Console.WriteLine($"Modalidade: {Modalidade}");
         Console.WriteLine($"Placar: {PlacarEquipe1} x {PlacarEquipe2}");
+        Console.WriteLine($"Resultado: {ObterResultado()}");
         Console.WriteLine("=================================");
     }
 }
