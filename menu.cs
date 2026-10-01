@@ -102,6 +102,14 @@ public class Menu
                     ConsultarFestival();
                     break;
 
+                case 11:
+                    GerarConviteFestival();
+                    break;
+
+                case 12:
+                    GerarCartaoResultado();
+                    break;
+
                 case 0:
                     Console.WriteLine("\nEncerrando o programa...");
                     break;
