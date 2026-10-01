@@ -685,6 +685,36 @@ public class Menu
         Pausar();
     }
 
+    private void GerarConviteFestival()
+    {
+        Console.Clear();
+
+        Console.WriteLine("=================================");
+        Console.WriteLine("          CONVITE");
+        Console.WriteLine("=================================");
+
+        if (sistema.Festival == null)
+        {
+            Console.WriteLine("Nenhum festival cadastrado.");
+            Pausar();
+            return;
+        }
+
+        Festival festival = sistema.Festival;
+
+        Console.WriteLine();
+        Console.WriteLine($"Você está convidado para o {festival.Nome}!");
+        Console.WriteLine();
+        Console.WriteLine($"Local: {festival.Local}");
+        Console.WriteLine($"Data: {festival.Data}");
+        Console.WriteLine($"Horário: {festival.Horario}");
+        Console.WriteLine();
+        Console.WriteLine("Venha participar da Liga da Turma!");
+        Console.WriteLine("=================================");
+
+        Pausar();
+    }
+
     private void ConsultarEquipesSemPausa()
     {
         Console.WriteLine("===== EQUIPES =====\n");
