@@ -419,7 +419,7 @@ public class Menu
 
         int id = sistema.GerarIdPartida();
     
-        Partida partida = new Partida(id, equipe1, equipe2, modalidade);
+        Partida partida = new PartidaFutsal(id, equipe1, equipe2);
 
         sistema.AdicionarPartida(partida);
 
