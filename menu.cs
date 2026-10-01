@@ -419,7 +419,24 @@ public class Menu
 
         int id = sistema.GerarIdPartida();
     
-        Partida partida = new PartidaFutsal(id, equipe1, equipe2);
+        Partida partida;
+
+        if (modalidade == "Futsal")
+        {
+            partida = new PartidaFutsal(id, equipe1, equipe2);
+        }
+        else if (modalidade == "Voleibol")
+        {
+            partida = new PartidaVoleibol(id, equipe1, equipe2);
+        }
+        else if (modalidade == "Basquete")
+        {
+            partida = new PartidaBasquete(id, equipe1, equipe2);
+        }
+        else
+        {
+            partida = new PartidaBeisebol(id, equipe1, equipe2);
+        }
 
         sistema.AdicionarPartida(partida);
 
