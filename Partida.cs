@@ -1,6 +1,6 @@
 using System;
 
-public class Partida
+public abstract class Partida
 {
 
     public int Id { get; private set; }
@@ -57,25 +57,8 @@ public class Partida
         ResultadoRegistrado = true;
     }
 
-    public string ObterResultado()
-    {
-        if (!ResultadoRegistrado)
-        {
-            return "Resultado ainda não registrado.";
-        }
-
-        if (PlacarEquipe1 > PlacarEquipe2)
-        {
-            return $"{Equipe1.Nome} venceu";
-        }
-
-        if (PlacarEquipe2 > PlacarEquipe1)
-        {
-            return $"{Equipe2.Nome} venceu";
-        }
-
-        return "Empate";
-    }
+    public abstract string ObterResultado();
+    
 
     public void ExibirPartida()
     {
