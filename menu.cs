@@ -35,6 +35,9 @@ public class Menu
             Console.WriteLine("║ 8 - Alterar resultado(s)                 ║");
             Console.WriteLine("║ 9 - Cadastrar festival                   ║");
             Console.WriteLine("║ 10 - Consultar festival                  ║");
+            Console.WriteLine("║ 11 - Gerar convite do festival           ║");
+            Console.WriteLine("║ 12 - Gerar cartão de resultado           ║");
+
 
             Console.ForegroundColor = ConsoleColor.Red;
 
@@ -97,6 +100,14 @@ public class Menu
 
                 case 10:
                     ConsultarFestival();
+                    break;
+
+                case 11:
+                    GerarConviteFestival();
+                    break;
+
+                case 12:
+                    GerarCartaoResultado();
                     break;
 
                 case 0:
