@@ -726,6 +726,80 @@ public class Menu
         Pausar();
     }
 
+    private void GerarCartaoResultado()
+    {
+        Console.Clear();
+
+        Console.WriteLine("=================================");
+     Console.WriteLine("      CARTÃO DE RESULTADO");
+        Console.WriteLine("=================================");
+
+        if (sistema.Partidas.Count == 0)
+        {
+            Console.WriteLine("Nenhuma partida cadastrada.");
+            Pausar();
+            return;
+        }
+
+        Console.WriteLine("\nPartidas disponíveis:\n");
+
+        foreach (Partida partida in sistema.Partidas)
+        {
+            Console.WriteLine(
+                $"ID: {partida.Id} | " +
+                $"{partida.Equipe1.Nome} x {partida.Equipe2.Nome} | " +
+                $"{partida.Modalidade}"
+            );
+        }
+
+        Console.Write("\nDigite o ID da partida: ");
+
+        if (!int.TryParse(Console.ReadLine(), out int id))
+        {
+            Console.WriteLine("\nID inválido.");
+            Pausar();
+            return;
+        }
+
+        Partida? partidaSelecionada = null;
+
+        foreach (Partida partida in sistema.Partidas)
+        {
+            if (partida.Id == id)
+            {
+                partidaSelecionada = partida;
+                break;
+            }
+        }
+
+        if (partidaSelecionada == null)
+        {
+            Console.WriteLine("\nPartida não encontrada.");
+            Pausar();
+            return;
+        }
+
+        Console.Clear();
+
+        Console.WriteLine("=================================");
+        Console.WriteLine("      CARTÃO DE RESULTADO");
+        Console.WriteLine("=================================");
+        Console.WriteLine($"ID da partida: {partidaSelecionada.Id}");
+        Console.WriteLine($"Modalidade: {partidaSelecionada.Modalidade}");
+        Console.WriteLine();
+        Console.WriteLine(
+            $"{partidaSelecionada.Equipe1.Nome} " +
+            $"{partidaSelecionada.PlacarEquipe1} x " +
+            $"{partidaSelecionada.PlacarEquipe2} " +
+            $"{partidaSelecionada.Equipe2.Nome}"
+        );
+        Console.WriteLine();
+        Console.WriteLine($"Resultado: {partidaSelecionada.ObterResultado()}");
+        Console.WriteLine("=================================");
+
+        Pausar();
+    }
+
     private void ConsultarEquipesSemPausa()
     {
         Console.WriteLine("===== EQUIPES =====\n");
