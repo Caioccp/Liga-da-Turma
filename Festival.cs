@@ -1,6 +1,6 @@
 using System;
 
-public class Festival
+public class Festival : IPublicidade
 {
     public string Nome { get; private set; }
     public string Local { get; private set; }
@@ -34,5 +34,13 @@ public class Festival
         Console.WriteLine($"Local: {Local}");
         Console.WriteLine($"Data: {Data}");
         Console.WriteLine($"Horário: {Horario}");
+    }
+
+    public string GerarTexto()
+    {
+        return $"Você está convidado para o {Nome}!\n" +
+           $"Local: {Local}\n" +
+           $"Data: {Data}\n" +
+           $"Horário: {Horario}";
     }
 }
