@@ -767,6 +767,8 @@ public class Menu
                 $"{partida.Equipe1.Nome} x {partida.Equipe2.Nome} | " +
                 $"{partida.Modalidade}"
             );
+            
+            Console.WriteLine(partida.ObterResultado());
         }
 
         Console.Write("\nDigite o ID da partida: ");
