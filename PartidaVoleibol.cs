@@ -27,4 +27,12 @@ public class PartidaVoleibol : Partida
 
         return "Empate";
     }
+
+    public string GerarTexto()
+    {
+        return $"🏆 {Equipe1.Nome} x {Equipe2.Nome}\n" +
+           $"Modalidade: {Modalidade}\n" +
+           $"Placar: {PlacarEquipe1} x {PlacarEquipe2}\n" +
+           $"Resultado: {ObterResultado()}";
+    }
 }
