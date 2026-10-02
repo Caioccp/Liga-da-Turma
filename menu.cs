@@ -295,20 +295,32 @@ public class Menu
 
         ConsultarEquipesSemPausa();
 
-        Console.Write("\nDigite o número da equipe que deseja excluir: ");
+        Console.WriteLine("\n0 - Voltar");
 
-        if (!int.TryParse(Console.ReadLine(), out int numero))
-        {
-            Console.WriteLine("Número inválido.");
-            Pausar();
-            return;
-        }
+        int numero;
 
-        if (numero < 1 || numero > sistema.Equipes.Count)
+        while (true)
         {
-            Console.WriteLine("Equipe não encontrada.");
-            Pausar();
+            Console.Write("\nDigite o número da equipe que deseja excluir: ");
+
+            if (!int.TryParse(Console.ReadLine(), out numero))
+            {
+                Console.WriteLine("Número inválido. Digite novamente.");
+                continue;
+            }
+
+            if (numero == 0)
+            {
             return;
+            }
+
+            if (numero < 1 || numero > sistema.Equipes.Count)
+            {
+                Console.WriteLine("Equipe não encontrada. Digite novamente.");
+                continue;
+            }
+
+            break;
         }
 
         Equipe equipe = sistema.Equipes[numero - 1];
