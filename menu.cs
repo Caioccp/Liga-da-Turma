@@ -87,11 +87,11 @@ public class Menu
                     break;
 
                 case 7:
-                    AlterarResultado();
+                    ExcluirResultado();
                     break;
 
                 case 8:
-                    ExcluirPartida();
+                    AlterarPartida();
                     break;
 
                 case 9:
