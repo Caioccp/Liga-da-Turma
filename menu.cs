@@ -227,25 +227,30 @@ public class Menu
 
         Console.WriteLine("\n0 - Voltar");
 
-        Console.Write("\nDigite o número da equipe que deseja alterar: ");
+        int numero;
 
-        if (!int.TryParse(Console.ReadLine(), out int numero))
+        while (true)
         {
-            Console.WriteLine("Número inválido.");
-            Pausar();
-            return;
-        }
+            Console.Write("\nDigite o número da equipe que deseja alterar: ");
 
-        if (numero == 0)
-        {
-            return;
-        }
+            if (!int.TryParse(Console.ReadLine(), out numero))
+            {
+                Console.WriteLine("Número inválido. Digite novamente.");
+                continue;
+            }
 
-        if (numero < 1 || numero > sistema.Equipes.Count)
-        {
-            Console.WriteLine("Equipe não encontrada.");
-            Pausar();
-            return;
+            if (numero == 0)
+            {
+                return;
+            }
+
+            if (numero < 1 || numero > sistema.Equipes.Count)
+            {
+                Console.WriteLine("Equipe não encontrada. Digite novamente.");
+                continue;
+            }
+
+            break;
         }
 
         Equipe equipe = sistema.Equipes[numero - 1];
