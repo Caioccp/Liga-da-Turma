@@ -33,10 +33,10 @@ public class Menu
             Console.WriteLine("║ 6 - Consultar partida(s)                 ║");
             Console.WriteLine("║ 7 - Excluir partida(s)                   ║");
             Console.WriteLine("║ 8 - Alterar resultado(s)                 ║");
-            Console.WriteLine("║ 9 - Cadastrar festival                   ║");
-            Console.WriteLine("║ 10 - Consultar festival                  ║");
-            Console.WriteLine("║ 11 - Gerar convite do festival           ║");
-            Console.WriteLine("║ 12 - Gerar cartão de resultado           ║");
+            Console.WriteLine("║ 9 - Cadastrar festival(is)               ║");
+            Console.WriteLine("║ 10 - Consultar festival(is)              ║");
+            Console.WriteLine("║ 11 - Gerar convite(s) do festival(is)    ║");
+            Console.WriteLine("║ 12 - Gerar cartão(ões) de resultado(is)  ║");
 
 
             Console.ForegroundColor = ConsoleColor.Red;
@@ -87,11 +87,11 @@ public class Menu
                     break;
 
                 case 7:
-                    ExcluirResultado();
+                    ExcluirPartida();
                     break;
 
                 case 8:
-                    AlterarPartida();
+                    AlterarResultado();
                     break;
 
                 case 9:
