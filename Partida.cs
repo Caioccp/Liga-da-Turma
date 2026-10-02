@@ -1,6 +1,6 @@
 using System;
 
-public abstract class Partida
+public abstract class Partida : IPublicidade
 {
 
     public int Id { get; private set; }
