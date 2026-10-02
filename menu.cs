@@ -293,54 +293,82 @@ public class Menu
             return;
         }
 
-        ConsultarEquipesSemPausa();
-
-        Console.WriteLine("\n0 - Voltar");
-
-        int numero;
-
         while (true)
         {
-            Console.Write("\nDigite o número da equipe que deseja excluir: ");
+            ConsultarEquipesSemPausa();
 
-            if (!int.TryParse(Console.ReadLine(), out numero))
+            Console.WriteLine("\n0 - Voltar");
+
+            int numero;
+
+            while (true)
             {
-                Console.WriteLine("Número inválido. Digite novamente.");
-                continue;
+                Console.Write("\nDigite o número da equipe que deseja excluir: ");
+
+                if (!int.TryParse(Console.ReadLine(), out numero))
+                {
+                    Console.WriteLine("Número inválido. Digite novamente.");
+                    continue;
+                }
+
+                if (numero == 0)
+                {
+                    return;
+                }
+
+                if (numero < 1 || numero > sistema.Equipes.Count)
+                {
+                    Console.WriteLine("Equipe não encontrada. Digite novamente.");
+                    continue;
+                }
+
+                break;
             }
 
-            if (numero == 0)
+            Equipe equipe = sistema.Equipes[numero - 1];
+
+            while (true)
             {
-            return;
+                Console.Write($"Tem certeza que deseja excluir '{equipe.Nome}'? (S/N): ");
+
+                string resposta = (Console.ReadLine() ?? "").ToUpper();
+
+                if (resposta == "S")
+                {
+                    sistema.RemoverEquipe(equipe);
+
+                    Console.WriteLine("\nEquipe excluída com sucesso!");
+                    Pausar();
+
+                    Console.Clear();
+
+                    Console.WriteLine("===== EXCLUIR EQUIPE =====\n");
+
+                    break;
+                }
+
+                if (resposta == "N")
+                {
+                    Console.WriteLine("\nExclusão cancelada.");
+                    Pausar();
+
+                    Console.Clear();
+
+                    Console.WriteLine("===== EXCLUIR EQUIPE =====\n");
+
+                    break;
+                }
+
+                Console.WriteLine("Opção inválida. Digite S ou N.\n");
             }
 
-            if (numero < 1 || numero > sistema.Equipes.Count)
+            if (sistema.Equipes.Count == 0)
             {
-                Console.WriteLine("Equipe não encontrada. Digite novamente.");
-                continue;
+                Console.WriteLine("\nNenhuma equipe cadastrada.");
+                Pausar();
+                return;
             }
-
-            break;
         }
-
-        Equipe equipe = sistema.Equipes[numero - 1];
-
-        Console.Write($"Tem certeza que deseja excluir '{equipe.Nome}'? (S/N): ");
-
-        string resposta = Console.ReadLine() ?? "";
-
-        if (resposta.ToUpper() != "S")
-        {
-            Console.WriteLine("\nExclusão cancelada.");
-            Pausar();
-            return;
-        }
-
-        sistema.RemoverEquipe(equipe);
-
-        Console.WriteLine("\nEquipe excluída com sucesso!");
-
-        Pausar();
     }
 
     private void RegistrarPartida()
