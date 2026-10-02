@@ -165,12 +165,23 @@ public class Menu
 
             Console.WriteLine($"\nEquipe '{nome}' cadastrada com sucesso!\n");
 
-            Console.Write("Deseja cadastrar outra equipe? (S/N): ");
-            string resposta = Console.ReadLine() ?? "";
-
-            if (resposta.ToUpper() != "S")
+            while (true)
             {
-                break;
+                Console.Write("Deseja cadastrar outra equipe? (S/N): ");
+                string resposta = (Console.ReadLine() ?? "").ToUpper();
+
+                if (resposta == "S")
+                {
+                    break;
+                }
+
+                if (resposta == "N")
+                {
+                    Pausar();
+                    return;
+                }
+
+                Console.WriteLine("Opção inválida. Digite S ou N.\n");
             }
         }
 
