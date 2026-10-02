@@ -58,6 +58,8 @@ public abstract class Partida : IPublicidade
     }
 
     public abstract string ObterResultado();
+
+    public abstract string GerarTexto();
     
 
     public void ExibirPartida()
