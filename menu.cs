@@ -388,57 +388,66 @@ public class Menu
 
         Console.WriteLine("\nDigite 0 para cancelar.");
 
-        Console.Write("\nNúmero da primeira equipe: ");
+        int numero1;
 
-        if (!int.TryParse(Console.ReadLine(), out int numero1))
+        while (true)
         {
-            Console.WriteLine("Número inválido.");
-            Pausar();
-            return;
+            Console.Write("\nNúmero da primeira equipe: ");
+
+            if (!int.TryParse(Console.ReadLine(), out numero1))
+            {
+                Console.WriteLine("Número inválido. Digite novamente.");
+                continue;
+            }
+
+            if (numero1 == 0)
+            {
+                Console.WriteLine("Cadastro da partida cancelado.");
+                Pausar();
+                return;
+            }
+
+            if (numero1 < 1 || numero1 > sistema.Equipes.Count)
+            {
+                Console.WriteLine("Equipe não encontrada. Digite novamente.");
+                continue;
+            }
+
+            break;
         }
 
-        if (numero1 == 0)
-        {
-            Console.WriteLine("Cadastro da partida cancelado.");
-            Pausar();
-            return;
-        }
+        int numero2;
 
-        if (numero1 < 1 || numero1 > sistema.Equipes.Count)
+        while (true)
         {
-            Console.WriteLine("Equipe não encontrada.");
-            Pausar();
-            return;
-        }
+            Console.Write("Número da segunda equipe: ");
 
-        Console.Write("Número da segunda equipe: ");
+            if (!int.TryParse(Console.ReadLine(), out numero2))
+            {
+                Console.WriteLine("Número inválido. Digite novamente.");
+                continue;
+            }
 
-        if (!int.TryParse(Console.ReadLine(), out int numero2))
-        {
-            Console.WriteLine("Número inválido.");
-            Pausar();
-            return;
-        }
+            if (numero2 == 0)
+            {
+                Console.WriteLine("Cadastro da partida cancelado.");
+                Pausar();
+                return;
+            }
 
-        if (numero2 == 0)
-        {
-            Console.WriteLine("Cadastro da partida cancelado.");
-            Pausar();
-            return;
-        }
+            if (numero2 < 1 || numero2 > sistema.Equipes.Count)
+            {
+                Console.WriteLine("Equipe não encontrada. Digite novamente.");
+                continue;
+            }
 
-        if (numero2 < 1 || numero2 > sistema.Equipes.Count)
-        {
-            Console.WriteLine("Equipe não encontrada.");
-            Pausar();
-            return;
-        }
+            if (numero1 == numero2)
+            {
+                Console.WriteLine("Uma equipe não pode jogar contra ela mesma.");
+                continue;
+            }
 
-        if (numero1 == numero2)
-        {
-            Console.WriteLine("Uma equipe não pode jogar contra ela mesma.");
-            Pausar();
-            return;
+            break;
         }
 
         Equipe equipe1 = sistema.Equipes[numero1 - 1];
@@ -455,39 +464,43 @@ public class Menu
         Console.WriteLine("4 - Beisebol");
         Console.WriteLine("0 - Cancelar");
 
-        Console.Write("\nEscolha a modalidade: ");
-
-        string opcaoModalidade = Console.ReadLine() ?? "";
-
         string modalidade;
 
-        switch (opcaoModalidade)
+        while (true)
         {
-            case "1":
-                modalidade = "Futsal";
-                break;
+            Console.Write("\nEscolha a modalidade: ");
 
-            case "2":
-                modalidade = "Voleibol";
-                break;
+            string opcaoModalidade = Console.ReadLine() ?? "";
 
-            case "3":
-                modalidade = "Basquete";
-                break;
+            switch (opcaoModalidade)
+            {
+                case "1":
+                    modalidade = "Futsal";
+                    break;
 
-            case "4":
-                modalidade = "Beisebol";
-                break;
+                case "2":
+                    modalidade = "Voleibol";
+                    break;
 
-            case "0":
-                Console.WriteLine("\nCadastro da partida cancelado.");
-                Pausar();
-                return;
+                case "3":
+                    modalidade = "Basquete";
+                    break;
 
-            default:
-                Console.WriteLine("\nModalidade inválida.");
-                Pausar();
-                return;
+                case "4":
+                    modalidade = "Beisebol";
+                    break;
+
+                case "0":
+                    Console.WriteLine("\nCadastro da partida cancelado.");
+                    Pausar();
+                    return;
+
+                default:
+                    Console.WriteLine("Modalidade inválida. Digite novamente.");
+                    continue;
+            }
+
+            break;
         }
 
         int id = sistema.GerarIdPartida();
