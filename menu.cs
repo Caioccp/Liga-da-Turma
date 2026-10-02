@@ -225,12 +225,19 @@ public class Menu
 
         ConsultarEquipesSemPausa();
 
+        Console.WriteLine("\n0 - Voltar");
+
         Console.Write("\nDigite o número da equipe que deseja alterar: ");
 
         if (!int.TryParse(Console.ReadLine(), out int numero))
         {
             Console.WriteLine("Número inválido.");
             Pausar();
+            return;
+        }
+
+        if (numero == 0)
+        {
             return;
         }
 
