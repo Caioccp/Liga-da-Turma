@@ -731,11 +731,7 @@ public class Menu
         Festival festival = sistema.Festival;
 
         Console.WriteLine();
-        Console.WriteLine($"Você está convidado para o {festival.Nome}!");
-        Console.WriteLine();
-        Console.WriteLine($"Local: {festival.Local}");
-        Console.WriteLine($"Data: {festival.Data}");
-        Console.WriteLine($"Horário: {festival.Horario}");
+        Console.WriteLine(festival.GerarTexto());
         Console.WriteLine();
         Console.WriteLine("Venha participar da Liga da Turma!");
         Console.WriteLine("=================================");
