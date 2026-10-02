@@ -28,7 +28,7 @@ public class PartidaBeisebol : Partida
         return "Empate";
     }
 
-    public string GerarTexto()
+    public override string GerarTexto()
     {
         return $"🏆 {Equipe1.Nome} x {Equipe2.Nome}\n" +
            $"Modalidade: {Modalidade}\n" +
