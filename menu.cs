@@ -57,6 +57,7 @@ public class Menu
             {
                 Console.WriteLine("\nOpção inválida!");
                 Pausar();
+                opcao = -1;
                 continue;
             }
 
