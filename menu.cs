@@ -800,16 +800,8 @@ public class Menu
         Console.WriteLine("      CARTÃO DE RESULTADO");
         Console.WriteLine("=================================");
         Console.WriteLine($"ID da partida: {partidaSelecionada.Id}");
-        Console.WriteLine($"Modalidade: {partidaSelecionada.Modalidade}");
         Console.WriteLine();
-        Console.WriteLine(
-            $"{partidaSelecionada.Equipe1.Nome} " +
-            $"{partidaSelecionada.PlacarEquipe1} x " +
-            $"{partidaSelecionada.PlacarEquipe2} " +
-            $"{partidaSelecionada.Equipe2.Nome}"
-        );
-        Console.WriteLine();
-        Console.WriteLine($"Resultado: {partidaSelecionada.ObterResultado()}");
+        Console.WriteLine(partidaSelecionada.GerarTexto());
         Console.WriteLine("=================================");
 
         Pausar();
