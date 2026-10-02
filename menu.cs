@@ -150,6 +150,15 @@ public class Menu
                 continue;
             }
 
+            bool nomeJaExiste = sistema.Equipes.Any(e =>
+            e.Nome.Equals(nome, StringComparison.OrdinalIgnoreCase));
+
+            if (nomeJaExiste)
+            {
+            Console.WriteLine("Já existe uma equipe com esse nome.\n");
+            continue;
+            }
+
             Equipe equipe = new Equipe(nome);
 
             sistema.AdicionarEquipe(equipe);
