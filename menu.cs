@@ -944,70 +944,89 @@ public class Menu
 
     private void GerarCartaoResultado()
     {
-        Console.Clear();
-
-        Console.WriteLine("=================================");
-     Console.WriteLine("      CARTÃO DE RESULTADO");
-        Console.WriteLine("=================================");
-
-        if (sistema.Partidas.Count == 0)
+        while (true)
         {
-            Console.WriteLine("Nenhuma partida cadastrada.");
-            Pausar();
-            return;
-        }
+            Console.Clear();
 
-        Console.WriteLine("\nPartidas disponíveis:\n");
+            Console.WriteLine("=================================");
+            Console.WriteLine("      CARTÃO DE RESULTADO");
+            Console.WriteLine("=================================");
 
-        foreach (Partida partida in sistema.Partidas)
-        {
-            Console.WriteLine(
-                $"ID: {partida.Id} | " +
-                $"{partida.Equipe1.Nome} x {partida.Equipe2.Nome} | " +
-                $"{partida.Modalidade}"
-            );
-            
-            Console.WriteLine(partida.ObterResultado());
-        }
-
-        Console.Write("\nDigite o ID da partida: ");
-
-        if (!int.TryParse(Console.ReadLine(), out int id))
-        {
-            Console.WriteLine("\nID inválido.");
-            Pausar();
-            return;
-        }
-
-        Partida? partidaSelecionada = null;
-
-        foreach (Partida partida in sistema.Partidas)
-        {
-            if (partida.Id == id)
+            if (sistema.Partidas.Count == 0)
             {
-                partidaSelecionada = partida;
-                break;
+                Console.WriteLine("Nenhuma partida cadastrada.");
+                Pausar();
+                return;
+            }
+
+            Console.WriteLine("\nPartidas disponíveis:\n");
+
+            foreach (Partida partida in sistema.Partidas)
+            {
+                Console.WriteLine(
+                    $"ID: {partida.Id} | " +
+                    $"{partida.Equipe1.Nome} x {partida.Equipe2.Nome} | " +
+                    $"{partida.Modalidade}"
+                );
+
+                Console.WriteLine(partida.ObterResultado());
+                Console.WriteLine();
+            }
+
+            Console.WriteLine("0 - Voltar");
+
+            Console.Write("\nDigite o ID da partida: ");
+
+            if (!int.TryParse(Console.ReadLine(), out int id))
+            {
+                Console.WriteLine("\nID inválido. Digite novamente.");
+                Pausar();
+                continue;
+            }
+
+            if (id == 0)
+            {
+                return;
+            }
+
+            Partida? partidaSelecionada = null;
+
+            foreach (Partida partida in sistema.Partidas)
+            {
+                if (partida.Id == id)
+                {
+                    partidaSelecionada = partida;
+                    break;
+                }
+            }
+
+            if (partidaSelecionada == null)
+            {
+                Console.WriteLine("\nPartida não encontrada. Digite novamente.");
+                Pausar();
+                continue;
+            }
+
+            Console.Clear();
+
+            Console.WriteLine("=================================");
+            Console.WriteLine("      CARTÃO DE RESULTADO");
+            Console.WriteLine("=================================");
+            Console.WriteLine($"ID da partida: {partidaSelecionada.Id}");
+            Console.WriteLine();
+            Console.WriteLine(partidaSelecionada.GerarTexto());
+            Console.WriteLine("=================================");
+
+            Console.WriteLine("\nPressione Enter para gerar outro cartão.");
+            Console.WriteLine("Digite 0 para voltar ao menu.");
+
+            string continuar = Console.ReadLine() ?? "";
+
+            if (continuar == "0")
+            {
+                return;
             }
         }
-
-        if (partidaSelecionada == null)
-        {
-            Console.WriteLine("\nPartida não encontrada.");
-            Pausar();
-            return;
-        }
-
-        Console.Clear();
-
-        Console.WriteLine("=================================");
-        Console.WriteLine("      CARTÃO DE RESULTADO");
-        Console.WriteLine("=================================");
-        Console.WriteLine($"ID da partida: {partidaSelecionada.Id}");
-        Console.WriteLine();
-        Console.WriteLine(partidaSelecionada.GerarTexto());
-        Console.WriteLine("=================================");
-
-        Pausar();
     }
 
     private void ConsultarEquipesSemPausa()

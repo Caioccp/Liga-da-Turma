@@ -30,9 +30,24 @@ public class PartidaFutsal : Partida
 
     public override string GerarTexto()
     {
-        return $"🏆 {Equipe1.Nome} x {Equipe2.Nome}\n" +
-           $"Modalidade: {Modalidade}\n" +
-           $"Placar: {PlacarEquipe1} x {PlacarEquipe2}\n" +
-           $"Resultado: {ObterResultado()}";
+        string equipe1 = Equipe1.Nome;
+        string equipe2 = Equipe2.Nome;
+
+        if (ResultadoRegistrado)
+        {
+            if (PlacarEquipe1 > PlacarEquipe2)
+            {
+                equipe1 = $"🏆 {equipe1}";
+            }
+            else if (PlacarEquipe2 > PlacarEquipe1)
+            {
+                equipe2 = $"🏆 {equipe2}";
+            }
+        }
+
+        return $"{equipe1} x {equipe2}\n" +
+               $"Modalidade: {Modalidade}\n" +
+               $"Placar: {PlacarEquipe1} x {PlacarEquipe2}\n" +
+               $"Resultado: {ObterResultado()}";
     }
 }
