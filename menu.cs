@@ -528,13 +528,24 @@ public class Menu
 
         Console.WriteLine($"\nPartida de {modalidade} cadastrada com sucesso!");
 
-        Console.Write("\nDeseja registrar o resultado agora? (S/N): ");
-
-        string resposta = Console.ReadLine() ?? "";
-
-        if (resposta.ToUpper() == "S")
+        while (true)
         {
-            RegistrarResultadoDaPartida(partida);
+            Console.Write("\nDeseja registrar o resultado agora? (S/N): ");
+
+            string resposta = (Console.ReadLine() ?? "").ToUpper();
+
+            if (resposta == "S")
+            {
+                RegistrarResultadoDaPartida(partida);
+                break;
+            }
+
+            if (resposta == "N")
+            {
+                break;
+            }
+
+            Console.WriteLine("Opção inválida. Digite S ou N.");
         }
 
         Pausar();
