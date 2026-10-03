@@ -67,11 +67,20 @@ public abstract class Partida : IPublicidade
         Console.WriteLine("=================================");
         Console.WriteLine("           PARTIDA");
         Console.WriteLine("=================================");
-        Console.WriteLine ($"ID da partida: {Id}");
+        Console.WriteLine($"ID da partida: {Id}");
         Console.WriteLine($"Equipe 1: {Equipe1.Nome}");
         Console.WriteLine($"Equipe 2: {Equipe2.Nome}");
         Console.WriteLine($"Modalidade: {Modalidade}");
-        Console.WriteLine($"Placar: {PlacarEquipe1} x {PlacarEquipe2}");
+
+        if (ResultadoRegistrado)
+        {
+            Console.WriteLine($"Placar: {PlacarEquipe1} x {PlacarEquipe2}");
+        }
+        else
+        {
+            Console.WriteLine("Placar: (Resultado ainda não registrado)");
+        }
+
         Console.WriteLine($"Resultado: {ObterResultado()}");
         Console.WriteLine("=================================");
     }
