@@ -849,24 +849,44 @@ public class Menu
             return;
         }
 
-        Console.Write("Data: ");
-        string data = Console.ReadLine() ?? "";
+        string data;
 
-        if (string.IsNullOrWhiteSpace(data))
+        while (true)
         {
-            Console.WriteLine("\nA data não pode ficar vazia.");
-            Pausar();
-            return;
+            Console.Write("Data (dd/MM/yyyy): ");
+            data = Console.ReadLine() ?? "";
+
+            if (DateTime.TryParseExact(
+                data,
+                "dd/MM/yyyy",
+                null,
+                System.Globalization.DateTimeStyles.None,
+                out _))
+            {
+                break;
+            }
+
+            Console.WriteLine("Data inválida. Use o formato dd/MM/yyyy.\n");
         }
 
-        Console.Write("Horário: ");
-        string horario = Console.ReadLine() ?? "";
+        string horario;
 
-        if (string.IsNullOrWhiteSpace(horario))
+        while (true)
         {
-            Console.WriteLine("\nO horário não pode ficar vazio.");
-            Pausar();
-            return;
+            Console.Write("Horário (HH:mm): ");
+            horario = Console.ReadLine() ?? "";
+
+            if (DateTime.TryParseExact(
+                horario,
+                "HH:mm",
+                null,
+                System.Globalization.DateTimeStyles.None,
+                out _))
+            {
+                break;
+            }
+
+            Console.WriteLine("Horário inválido. Use o formato HH:mm.\n");
         }
 
         Festival festival = new Festival(nome, local, data, horario);
