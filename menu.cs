@@ -635,26 +635,46 @@ public class Menu
     {
         Console.WriteLine("\n===== RESULTADO =====");
 
-        Console.Write($"Placar de {partida.Equipe1.Nome}: ");
+        int placar1;
 
-        if (!int.TryParse(Console.ReadLine(), out int placar1))
+        while (true)
         {
-            Console.WriteLine("Placar inválido.");
-            return;
+            Console.Write($"Placar de {partida.Equipe1.Nome}: ");
+
+            if (!int.TryParse(Console.ReadLine(), out placar1))
+            {
+                Console.WriteLine("Placar inválido. Digite novamente.");
+            continue;
+            }
+
+            if (placar1 < 0)
+            {
+                Console.WriteLine("O placar não pode ser negativo. Digite novamente.");
+                continue;
+            }
+
+            break;
         }
 
-        Console.Write($"Placar de {partida.Equipe2.Nome}: ");
+        int placar2;
 
-        if (!int.TryParse(Console.ReadLine(), out int placar2))
+        while (true)
         {
-            Console.WriteLine("Placar inválido.");
-            return;
-        }
+            Console.Write($"Placar de {partida.Equipe2.Nome}: ");
 
-        if (placar1 < 0 || placar2 < 0)
-        {
-            Console.WriteLine("O placar não pode ser negativo.");
-            return;
+            if (!int.TryParse(Console.ReadLine(), out placar2))
+            {
+                Console.WriteLine("Placar inválido. Digite novamente.");
+                continue;
+            }
+
+            if (placar2 < 0)
+            {
+                Console.WriteLine("O placar não pode ser negativo. Digite novamente.");
+                continue;
+            }
+
+            break;
         }
 
         partida.AlterarResultado(placar1, placar2);
