@@ -587,48 +587,74 @@ public class Menu
             return;
         }
 
-        for (int i = 0; i < sistema.Partidas.Count; i++)
+        while (true)
         {
-            Partida partida = sistema.Partidas[i];
+            Console.Clear();
 
-            Console.WriteLine(
-                $"ID {partida.Id} - {partida.Equipe1.Nome} " +
-                $"{partida.PlacarEquipe1} x {partida.PlacarEquipe2} " +
-                $"{partida.Equipe2.Nome} " +
-                $"({partida.Modalidade})"
-            );
-        }
+            Console.WriteLine("===== ALTERAR RESULTADO =====\n");
 
-        Console.Write("\nDigite o ID da partida: ");
-
-        if (!int.TryParse(Console.ReadLine(), out int id))
-        {
-            Console.WriteLine("ID inválido.");
-            Pausar();
-            return;
-        }
-
-        Partida? partidaSelecionada = null;
-
-        for (int i = 0; i < sistema.Partidas.Count; i++)
-        {
-            if (sistema.Partidas[i].Id == id)
+            for (int i = 0; i < sistema.Partidas.Count; i++)
             {
-                partidaSelecionada = sistema.Partidas[i];
-                break;
+                Partida partida = sistema.Partidas[i];
+
+                string resultado;
+
+                if (partida.ResultadoRegistrado)
+                {
+                    resultado = $"{partida.PlacarEquipe1} x {partida.PlacarEquipe2}";
+                }
+                else
+                {
+                    resultado = "(Resultado ainda não registrado)";
+                }
+
+                Console.WriteLine(
+                    $"ID {partida.Id} - {partida.Equipe1.Nome} " +
+                    $"{resultado} " +
+                    $"{partida.Equipe2.Nome} " +
+                    $"({partida.Modalidade})"
+                );
             }
-        }
 
-        if (partidaSelecionada == null)
-        {
-            Console.WriteLine("Partida não encontrada.");
+            Console.WriteLine("\n0 - Cancelar");
+
+            Console.Write("\nDigite o ID da partida: ");
+
+            if (!int.TryParse(Console.ReadLine(), out int id))
+            {
+                Console.WriteLine("\nID inválido. Digite novamente.");
+                Pausar();
+                continue;
+            }
+
+            if (id == 0)
+            {
+                return;
+            }
+
+            Partida? partidaSelecionada = null;
+
+            for (int i = 0; i < sistema.Partidas.Count; i++)
+            {
+                if (sistema.Partidas[i].Id == id)
+                {
+                    partidaSelecionada = sistema.Partidas[i];
+                    break;
+                }
+            }
+
+            if (partidaSelecionada == null)
+            {
+                Console.WriteLine("\nPartida não encontrada. Digite novamente.");
+                Pausar();
+                continue;
+            }
+
+            RegistrarResultadoDaPartida(partidaSelecionada);
+
+            Console.WriteLine("\nResultado alterado com sucesso!");
             Pausar();
-            return;
         }
-
-        RegistrarResultadoDaPartida(partidaSelecionada);
-
-        Pausar();
     }
 
     private void RegistrarResultadoDaPartida(Partida partida)
@@ -679,7 +705,6 @@ public class Menu
 
         partida.AlterarResultado(placar1, placar2);
 
-        Console.WriteLine("\nResultado registrado com sucesso!");
     }
 
     private void ExcluirPartida()
